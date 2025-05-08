@@ -1,4 +1,5 @@
-import AdminLeftBar from "@/components/AdminLeftBar/AdminLeftBar";
+import AdminLeftBar from "@/components/AdminBar/AdminBar";
+import MaxWidth from "@/components/MaxWidth/MaxWidth";
 
 export default function DashboardLayout({
   children,
@@ -6,11 +7,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-center h-screen w-full gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 mx-auto">
       <AdminLeftBar />
-      <div className="w-full h-full flex flex-col mr-4 items-center justify-center">
+      <MaxWidth className="">
         {children}
-      </div>
+      </MaxWidth>
     </div>
   );
 }
