@@ -13,6 +13,7 @@
     "@heroui/system": "^2.4.15",
     "@heroui/table": "^2.2.18",
     "@heroui/theme": "^2.4.15",
+    "@supabase/ssr": "^0.6.1",
     "framer-motion": "^12.10.1",
     "lucide-react": "^0.508.0",
     "next": "15.3.2",

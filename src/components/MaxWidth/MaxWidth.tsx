@@ -6,7 +6,7 @@ export default function MaxWidth({
   className?: string;
 }) {
   return (
-    <div className={`max-w-screen-lg w-full mx-auto ${className}`}>
+    <div className={`max-w-screen-lg p-2 w-full mx-auto ${className}`}>
       {children}
     </div>
   );
