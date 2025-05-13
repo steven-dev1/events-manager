@@ -1,6 +1,5 @@
 import EventsSection from "@/components/EventsSection/EventsSection";
 import MaxWidth from "@/components/MaxWidth/MaxWidth";
-import { inputStyles} from "@/utils/consts";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 
@@ -23,7 +22,7 @@ export default async function Events() {
       </div>
       <form className="relative flex items-center pl-2 my-4 border rounded-lg border-zinc-200 focus-within:border-zinc-500">
         <label htmlFor="search"><Search color="#9f9fa9" size={16} className="" /></label>
-        <input type="search" name="search" placeholder="Search Events" className={inputStyles} />
+        <input type="search" name="search" placeholder="Search Events" className='w-full p-2 ml-2 text-sm bg-white rounded-lg outline-none border-zinc-200 focus-within-zinc-400 text-zinc-900' />
       </form>
       <EventsSection />
     </MaxWidth>

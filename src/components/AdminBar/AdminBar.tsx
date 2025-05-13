@@ -4,6 +4,7 @@ import {
   CalendarClock,
   UserRoundSearch,
   CalendarDays,
+  LucideMenu,
 } from "lucide-react";
 import ItemsLeftBar from "../ItemsLeftBar/ItemsLeftBar";
 
@@ -15,7 +16,7 @@ export default function AdminBar() {
           <CalendarDays size={22} />
           <h1 className="text-2xl font-bold">EventHub</h1>
         </div>
-        <ul className="flex gap-2 text-white">
+        <ul className="hidden gap-2 text-white sm:flex">
           <ItemsLeftBar
             href={"/dashboard"}
             icon={<SlidersHorizontal size={20} />}
@@ -32,6 +33,28 @@ export default function AdminBar() {
             text="Attendees"
           />
         </ul>
+        <button className="flex items-center gap-2 cursor-pointer sm:hidden">
+          <LucideMenu size={22} />
+        </button>
+        <div>
+          <ul className="absolute  top-0 right-0 z-10 hidden flex-col h-screen gap-2 p-2 text-white w-[50%] bg-zinc-900 sm:hidden">
+            <ItemsLeftBar
+              href={"/dashboard"}
+              icon={<SlidersHorizontal size={20} />}
+              text="Dashboard"
+            />
+            <ItemsLeftBar
+              href={"/dashboard/events"}
+              icon={<CalendarClock size={20} />}
+              text="Events"
+            />
+            <ItemsLeftBar
+              href={"/dashboard/attendees"}
+              icon={<UserRoundSearch size={20} />}
+              text="Attendees"
+            />
+          </ul>
+        </div>
       </nav>
     </div>
   );
