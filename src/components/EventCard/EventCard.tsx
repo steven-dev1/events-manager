@@ -9,53 +9,54 @@ import {
   Users,
 } from "lucide-react";
 import DetailEventItem from "../DetailEventItem/DetailEventItem";
-import { useState } from "react";
-
-interface EventCardProps {
-  title: string;
-  description: string;
-  date: string;
-  starttime: string;
-  endtime: string;
-  location: string;
-  capacity: number;
-}
+import { EventProps } from "@/types";
+import { toggleMenu } from "@/redux/eventMenuSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Link from "next/link";
 
 export default function EventCard({
   EventCardProps,
 }: {
-  EventCardProps: EventCardProps;
+  EventCardProps: EventProps;
 }) {
-  const [open, setOpen] = useState(false);
+  const seats = EventCardProps?.capacity + " seats";
+  const dispatch = useAppDispatch();
+  const openCardId = useAppSelector((state) => state.eventMenu.openCardId);
+
+  const isMenuOpen = openCardId === EventCardProps.id;
+
   return (
     <article className="flex flex-col items-center justify-between gap-4 p-4 transition-all duration-150 border rounded-lg shadow-md border-zinc-200">
       <div className="flex items-center justify-between w-full gap-2">
         <div className="flex flex-col items-start">
-          <h2 className="text-xl font-bold">{EventCardProps.title}</h2>
-          <p className="text-sm text-zinc-500">{EventCardProps.description}</p>
+          <h2 className="text-xl font-bold">
+            {EventCardProps.title ?? "Error to load event name"}
+          </h2>
+          <p className="text-sm text-zinc-500">
+            {EventCardProps.description ?? "Error to load event description"}
+          </p>
         </div>
         <div className="relative">
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() => dispatch(toggleMenu(EventCardProps.id))}
             className="p-1 rounded-full cursor-pointer hover:bg-zinc-100"
           >
             <EllipsisVertical size={20} />
           </button>
-          <div
-            className={`absolute top-1 right-0 ${
-              open ? "scale-0 opacity-0" : "scale-100 opacity-100"
-            } transition-all duration-150 translate-y-full`}
-          >
-            <ul className="p-2 text-xs font-medium rounded-lg shadow-md bg-zinc-100">
-              <li className="flex items-center gap-1 p-1 rounded-lg cursor-pointer hover:bg-zinc-200">
-                <Edit size={16} /> Edit
-              </li>
-              <li className="flex items-center gap-1 p-1 rounded-lg cursor-pointer hover:bg-red-100 hover:text-red-600">
-                <Trash2 size={16} />
-                Delete
-              </li>
-            </ul>
-          </div>
+            <div className={`${isMenuOpen ? "scale-100" : "scale-0"} absolute right-0 transition-all duration-150 top-10`}>
+              <ul className="p-2 text-xs font-medium rounded-lg shadow-md bg-zinc-100">
+                <li>
+                  <Link href={"./event/edit"} className="flex items-center w-full gap-1 p-1 rounded-lg cursor-pointer hover:bg-zinc-200">
+                    <Edit size={16} /> Edit
+                  </Link>
+                </li>
+                <li>
+                  <button className="flex items-center w-full gap-1 p-1 rounded-lg cursor-pointer hover:bg-red-100 hover:text-red-600">
+                    <Trash2 size={16} /> Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
         </div>
       </div>
       <div className="flex flex-col items-start w-full gap-2">
@@ -65,15 +66,17 @@ export default function EventCard({
         />
         <DetailEventItem
           icon={<Clock size={18} />}
-          text={`${EventCardProps.starttime} - ${EventCardProps.endtime}`}
+          text={`${EventCardProps.starttime ?? "Error"} - ${
+            EventCardProps.endtime ?? "Error"
+          }`}
         />
         <DetailEventItem
           icon={<MapPin size={18} />}
-          text={EventCardProps.location}
+          text={EventCardProps.location ?? "Error to load event location"}
         />
         <DetailEventItem
           icon={<Users size={18} />}
-          text={`${EventCardProps.capacity} seats`}
+          text={seats ?? "Error to load event seats"}
         />
       </div>
       <div className="w-full">
